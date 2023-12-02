@@ -57,7 +57,7 @@ const ProfileCard = () => {
             </div>
           </CardTitle>
           <CardDescription>
-            <p className="mt-8 scroll-m-20 md:text-2xl text-lg font-semibold tracking-tight text-black">
+            <p className="mt-8 scroll-m-20 md:text-2xl text-lg tracking-tight text-black">
               {/* @ts-ignore */}
               {user.unsafeMetadata.bio}
             </p>

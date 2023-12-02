@@ -33,8 +33,8 @@ const formSchema = z.object({
   }),
   bio: z.string().min(10, {
     message: "Bio must be at least 10 characters.",
-  }).max(350, {
-    message: "Bio cannot be longer than 350 characters.",
+  }).max(250, {
+    message: "Bio cannot be longer than 250 characters.",
   })
 });
 
@@ -68,7 +68,7 @@ const ProfilePage = () => {
         }
       });
 
-      router.push("/feed");
+      router.push("/profile");
       router.refresh();
     } catch (error) {
       console.log(error);

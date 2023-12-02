@@ -1,31 +1,30 @@
-import { auth, clerkClient, useUser } from "@clerk/nextjs";
+import { clerkClient,} from "@clerk/nextjs";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-
-import { Edit } from "lucide-react";
-import Link from "next/link";
 import prismadb from "@/lib/prismadb";
-import { PostCard } from "./post-card";
+import { PostCard } from "@/components/post-card";
 
-const ProfileCard = async () => {
+interface ProfileCardProps {
+  profileId: string
+}
 
-  const { userId } = auth();
-  const user = await clerkClient.users.getUser(userId as string)
+const ProfileCard: React.FC<ProfileCardProps> = async ({
+  profileId
+}) => {
+  const user = await clerkClient.users.getUser(profileId)
 
   const latestPostsByUser = await prismadb.post.findMany({
     where: {
-      userId: user.id,
+      userId: profileId,
     },
     orderBy: {
       createdAt: 'desc',
@@ -48,18 +47,12 @@ const ProfileCard = async () => {
                 </AvatarFallback>
               </Avatar>
               <div>
-                <p className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+                <p className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl" suppressHydrationWarning>
                   {user.firstName + ' ' + user.lastName}
                 </p>
-                <p className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-zinc-400">
+                <p className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-zinc-400" suppressHydrationWarning>
                   @{user.username}
                 </p>
-                <Link href="/profile/edit">
-                  <Button variant={"outline"} className="mt-4">
-                    <Edit size={15} />{" "}
-                    <span className="ml-2">Edit Profile</span>
-                  </Button>
-                </Link>
               </div>
             </div>
           </CardTitle>
@@ -71,17 +64,16 @@ const ProfileCard = async () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">
-            Posts
-          </p>
-          <Separator className="mt-2 mb-6" />
           <div>
-            {latestPostsByUser.length === 0 && <p className="text-lg text-zinc-400">No posts.</p>}
-          </div>
-          <div className="grid lg:grid-cols-2 md:grid-cols-1 place-items-center">
-            {latestPostsByUser.map((post) => (
-              <PostCard key={post.id} data={post} username={user.username as string} />
-            ))} 
+            <p className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">
+              Posts
+            </p>
+            <Separator className="mt-2 mb-6" />
+            <div className="grid lg:grid-cols-2 md:grid-cols-1 place-items-center">
+              {latestPostsByUser.map((post) => (
+                <PostCard key={post.id} data={post} username={user.username as string} />
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>

@@ -1,36 +1,39 @@
-"use client";
-
 import { PostCard } from "@/components/post-card";
 import Sidebar from "@/components/sidebar";
+import { Button } from "@/components/ui/button";
+import prismadb from "@/lib/prismadb";
 
-import { useUser } from "@clerk/nextjs";
+import { clerkClient } from "@clerk/nextjs";
+import Link from "next/link";
 
-const FeedPage = () => {
-  const { user } = useUser();
+const FeedPage = async () => {
+  const latestPosts = await prismadb.post.findMany({
+    orderBy: { createdAt: "desc" },
+  });
 
-  if (!user) {
-    return null
-  }
-  
+
   return (
     <div className="h-full">
       <Sidebar />
-      
-      <div className="sm:ml-72 pt-20 flex justify-center items-center">  
+
+      <div className="sm:ml-72 pt-20 flex justify-center items-center">
         <div className="grid place-items-center gap-x-10 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4 mb-4">
-          <PostCard className="mb-10" />
-          <PostCard className="mb-10" />
-          <PostCard className="mb-10" />
-          <PostCard className="mb-10" />
-          <PostCard className="mb-10" />
-          <PostCard className="mb-10" />
-          <PostCard className="mb-10" />
-          <PostCard className="mb-10" />
-          <PostCard className="mb-10" />
+          {latestPosts.length === 0 && "No posts."}
+          {latestPosts.map(async post => {
+            const user = await clerkClient.users.getUser(post.userId);
+
+            return (
+              <PostCard
+                key={post.id}
+                data={post}
+                username={user.username as string}
+              />
+            )
+          })}
         </div>
       </div>
     </div>
   );
-}
- 
+};
+
 export default FeedPage;

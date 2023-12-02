@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { Settings, BookMarked } from "lucide-react";
+import { Settings, BookMarked, PlusIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import MenuIcon from "./ui/menu-icon";
@@ -20,15 +20,14 @@ const routes = [
   {
     name: "My Feed",
     href: "/feed",
-    icon: <BookMarked  size={17} />,
+    icon: <BookMarked size={17} />,
   },
   {
-    name: "Settings",
-    href: "/settings",
-    icon: <Settings size={20} />,
+    name: "Create",
+    href: "/create",
+    icon: <PlusIcon size={17} />,
   },
 ];
-
 
 export const revalidate = 0;
 
@@ -47,7 +46,7 @@ const Sidebar = () => {
   }
 
   if (!user) {
-    return null
+    return null;
   }
 
   return (
@@ -65,6 +64,10 @@ const Sidebar = () => {
 
             <SheetContent side="left">
               <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+                <p className="select-none scroll-m-20 text-3xl font-extrabold tracking-tighter transition-colors first:mt-0">
+                  DevHub
+                </p>
+                <Separator className="mt-2 mb-6" />
                 <ul className="space-y-2 font-medium">
                   <div className="flex w-full justify-between space-x-4 items-center select-none">
                     <Avatar>
@@ -90,7 +93,10 @@ const Sidebar = () => {
                       <div key={route.name} className="w-full">
                         <Link href={route.href}>
                           <Button
-                            className={cn("w-full flex items-center", pathname === route.href ? "bg-muted" : "")}
+                            className={cn(
+                              "w-full flex items-center justify-start",
+                              pathname === route.href ? "bg-muted" : ""
+                            )}
                             variant="outline"
                           >
                             {route.icon}
@@ -99,6 +105,20 @@ const Sidebar = () => {
                         </Link>
                       </div>
                     ))}
+                  </div>
+                  <div className="w-full">
+                    <Link href={"/settings"}>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full flex items-center justify-start",
+                          pathname === "/settings" ? "bg-muted" : ""
+                        )}
+                      >
+                        <Settings size={15} />
+                        <p className="ml-2">Settings</p>
+                      </Button>
+                    </Link>
                   </div>
                 </ul>
               </div>
@@ -111,7 +131,7 @@ const Sidebar = () => {
 
       <aside className="fixed top-0 left-0 z-10 w-72 h-screen transition-transform -translate-x-full sm:translate-x-0">
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-black/50">
-          <p className="select-none scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+          <p className="select-none scroll-m-20 text-3xl font-extrabold tracking-tighter transition-colors first:mt-0">
             DevHub
           </p>
           <Separator className="mt-2 mb-6" />
@@ -130,7 +150,9 @@ const Sidebar = () => {
             </div>
             <div className="leading-3 select-none">
               <p className="text-md md:text-lg">{user.fullName}</p>
-              <p className="text-sm md:text-md text-zinc-400">@{user.username}</p>
+              <p className="text-sm md:text-md text-zinc-400">
+                @{user.username}
+              </p>
             </div>
 
             <div className="py-10 space-y-2">
@@ -138,7 +160,10 @@ const Sidebar = () => {
                 <div key={route.name} className="w-full">
                   <Link href={route.href}>
                     <Button
-                      className={cn("w-full flex items-center", pathname === route.href ? "bg-accent" : "")}
+                      className={cn(
+                        "w-full flex items-center justify-start",
+                        pathname === route.href ? "bg-accent" : ""
+                      )}
                       variant="outline"
                     >
                       {route.icon}
@@ -147,6 +172,20 @@ const Sidebar = () => {
                   </Link>
                 </div>
               ))}
+            </div>
+            <div className="w-full">
+              <Link href={"/settings"}>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-full flex items-center justify-start",
+                    pathname === "/settings" ? "bg-muted" : ""
+                  )}
+                >
+                  <Settings size={15} />
+                  <p className="ml-2">Settings</p>
+                </Button>
+              </Link>
             </div>
           </ul>
         </div>

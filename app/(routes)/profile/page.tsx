@@ -1,9 +1,10 @@
 import ProfileCard from "@/components/profile-card";
 
-const ProfilePage = () => {
+const ProfilePage = async () => {
+  
   return (
     <div className="h-full">
-      <ProfileCard />      
+      <ProfileCard /> 
     </div>
   );
 };

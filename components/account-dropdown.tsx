@@ -26,17 +26,15 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-
-import { SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+
+import { useClerk } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export function AccountDropdown() {
+  const { signOut } = useClerk();
+  const router = useRouter();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -50,7 +48,7 @@ export function AccountDropdown() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link href="/profile">
-            <DropdownMenuItem className="cursor-pointer justify-between">
+            <DropdownMenuItem className="cursor-pointer">
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
               <DropdownMenuShortcut>⌘⇧P</DropdownMenuShortcut>
@@ -89,26 +87,37 @@ export function AccountDropdown() {
           </DropdownMenuSub>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <a target="_blank" rel="noopener noreferrer" href="https://github.com/Korabi123/dev-hub-social-media">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/Korabi123/dev-hub-social-media"
+        >
           <DropdownMenuItem className="cursor-pointer">
             <Github className="mr-2 h-4 w-4" />
             <span>GitHub</span>
           </DropdownMenuItem>
         </a>
-        <a target="_blank" rel="noopener noreferrer" href="https://github.com/Korabi123/dev-hub-social-media/issues">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/Korabi123/dev-hub-social-media/issues"
+        >
           <DropdownMenuItem className="cursor-pointer">
             <LifeBuoy className="mr-2 h-4 w-4" />
             <span>Support</span>
           </DropdownMenuItem>
         </a>
         <DropdownMenuSeparator />
-        <SignOutButton>
-          <DropdownMenuItem className="cursor-pointer">
+        <DropdownMenuItem className="cursor-pointer">
+          <button
+            className="py-0 px-0 flex items-center w-full"
+            onClick={() => signOut(() => router.push("/sign-in"))}
+          >
             <LogOut className="mr-2 h-4 w-4" />
             <span>Log out</span>
             <DropdownMenuShortcut>⌘⇧Q</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </SignOutButton>
+          </button>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -12,7 +12,6 @@ export default function EditLayout({
 }) {
   return (
     <>
-      <Sidebar />
       {children}
     </>
   )

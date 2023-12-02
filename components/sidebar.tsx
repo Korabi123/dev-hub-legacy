@@ -14,6 +14,7 @@ import MenuIcon from "./ui/menu-icon";
 import { AccountDropdown } from "./account-dropdown";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Separator } from "./ui/separator";
 
 const routes = [
   {
@@ -32,6 +33,9 @@ const routes = [
 export const revalidate = 0;
 
 const Sidebar = () => {
+  const { user } = useUser();
+  const pathname = usePathname();
+
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -42,13 +46,9 @@ const Sidebar = () => {
     return null;
   }
 
-  const { user } = useUser();
-
   if (!user) {
     return null
   }
-
-  const pathname = usePathname();
 
   return (
     <>
@@ -90,7 +90,7 @@ const Sidebar = () => {
                       <div key={route.name} className="w-full">
                         <Link href={route.href}>
                           <Button
-                            className={cn("w-full flex items-center", pathname === route.href ? "bg-black" : "")}
+                            className={cn("w-full flex items-center", pathname === route.href ? "bg-muted" : "")}
                             variant="outline"
                           >
                             {route.icon}
@@ -111,6 +111,10 @@ const Sidebar = () => {
 
       <aside className="fixed top-0 left-0 z-10 w-72 h-screen transition-transform -translate-x-full sm:translate-x-0">
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-black/50">
+          <p className="select-none scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+            DevHub
+          </p>
+          <Separator className="mt-2 mb-6" />
           <ul className="space-y-2 font-medium">
             <div className="flex w-full justify-between space-x-4 items-center select-none">
               <Avatar>

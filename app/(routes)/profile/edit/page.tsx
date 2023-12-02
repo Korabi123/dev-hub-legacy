@@ -32,7 +32,9 @@ const formSchema = z.object({
     message: "Username must be at least 2 characters.",
   }),
   bio: z.string().min(10, {
-    message: "Bio must be at least 10 characters."
+    message: "Bio must be at least 10 characters.",
+  }).max(350, {
+    message: "Bio cannot be longer than 350 characters.",
   })
 });
 
@@ -76,7 +78,7 @@ const ProfilePage = () => {
 
   return (
     <div className="h-full">
-      <div className="flex py-20 md:items-center justify-center md:h-full">
+      <div className="flex sm:ml-72 py-20 items-center justify-center">
         <Card className="w-[350px] select-none">
           <CardHeader>
             <CardTitle className="font-bold tracking-tight">

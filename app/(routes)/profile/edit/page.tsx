@@ -25,36 +25,45 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Navbar from "@/components/navbar";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
+  bio: z.string().min(10, {
+    message: "Bio must be at least 10 characters."
+  })
 });
 
 export const revalidate = 0;
 
 const ProfilePage = () => {
+  
   const router = useRouter();
-
+  
   const { isLoaded, isSignedIn, user } = useUser();
+  
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: `${user?.username}`,
+      bio: `${user?.unsafeMetadata.bio ? user?.unsafeMetadata.bio : ""}`
+    },
+  });
 
   if (!isLoaded || !isSignedIn) {
     return null;
   }
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: `${user.username}`,
-    },
-  });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     try {
       user.update({
         username: values.username,
+        unsafeMetadata: {
+          bio: values.bio
+        }
       });
 
       router.push("/feed");
@@ -67,7 +76,6 @@ const ProfilePage = () => {
 
   return (
     <div className="h-full">
-      <Navbar />
       <div className="flex py-20 md:items-center justify-center md:h-full">
         <Card className="w-[350px] select-none">
           <CardHeader>
@@ -95,6 +103,22 @@ const ProfilePage = () => {
                       </FormControl>
                       <FormDescription>
                         This is your public display name.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="bio"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Bio</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="Dedicated software engineer. Proficient in various programming languages, frameworks, and databases." {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        This is your bio.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>

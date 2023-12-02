@@ -1,16 +1,19 @@
+import Sidebar from "@/components/sidebar"
+
 export const metadata = {
   title: 'Edit Profile | DevHub',
   description: 'Edit DevHub Profile',
 }
 
-export default function RootLayout({
+export default function EditLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <>
+      <Sidebar />
+      {children}
+    </>
   )
 }

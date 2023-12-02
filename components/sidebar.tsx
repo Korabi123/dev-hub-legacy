@@ -7,11 +7,20 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { DoorOpen, Edit, LogOut, Settings } from "lucide-react";
+import { Settings, BookMarked } from "lucide-react";
 import { useEffect, useState } from "react";
-import { SignOutButton, UserButton, UserProfile } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
+import MenuIcon from "./ui/menu-icon";
+import { AccountDropdown } from "./account-dropdown";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const routes = [
+  {
+    name: "My Feed",
+    href: "/feed",
+    icon: <BookMarked  size={17} />,
+  },
   {
     name: "Settings",
     href: "/settings",
@@ -19,15 +28,10 @@ const routes = [
   },
 ];
 
-interface SidebarProps {
-  username: string;
-  imageUrl: string;
-  fullName: string;
-}
 
 export const revalidate = 0;
 
-const Sidebar: React.FC<SidebarProps> = ({ username, imageUrl, fullName }) => {
+const Sidebar = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -38,6 +42,14 @@ const Sidebar: React.FC<SidebarProps> = ({ username, imageUrl, fullName }) => {
     return null;
   }
 
+  const { user } = useUser();
+
+  if (!user) {
+    return null
+  }
+
+  const pathname = usePathname();
+
   return (
     <>
       {/* Mobile */}
@@ -47,19 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({ username, imageUrl, fullName }) => {
           <Sheet>
             <SheetTrigger>
               <Button className="items-center" variant="outline" size="icon">
-                <svg
-                  className="w-6 h-6"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    clip-rule="evenodd"
-                    fill-rule="evenodd"
-                    d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                  ></path>
-                </svg>
+                <MenuIcon />
               </Button>
             </SheetTrigger>
 
@@ -69,40 +69,28 @@ const Sidebar: React.FC<SidebarProps> = ({ username, imageUrl, fullName }) => {
                   <div className="flex w-full justify-between space-x-4 items-center select-none">
                     <Avatar>
                       <AvatarImage
-                        src={imageUrl}
-                        alt={`${username}'s profile image`}
+                        src={user.imageUrl}
+                        alt={`${user.username}'s profile image`}
                       />
                       <AvatarFallback>
                         <Skeleton className="w-[100px] h-[20px] rounded-full" />
                       </AvatarFallback>
                     </Avatar>
-
-                    <div className="flex space-x-2">
-                      <Link href="/profile/edit">
-                        <Button variant="outline">
-                          <Edit size={15} />{" "}
-                        </Button>
-                      </Link>
-                      <SignOutButton>
-                        <Button variant="outline" size="icon">
-                          <LogOut size={15} />
-                        </Button>
-                      </SignOutButton>
-                    </div>
+                    <AccountDropdown />
                   </div>
                   <div className="leading-3 select-none">
-                    <p className="text-md md:text-lg">{fullName}</p>
+                    <p className="text-md md:text-lg">{user.fullName}</p>
                     <p className="text-sm md:text-md text-zinc-400">
-                      @{username}
+                      @{user.username}
                     </p>
                   </div>
 
-                  <div className="py-10">
+                  <div className="py-10 space-y-2">
                     {routes.map((route) => (
                       <div key={route.name} className="w-full">
                         <Link href={route.href}>
                           <Button
-                            className="w-full flex items-center"
+                            className={cn("w-full flex items-center", pathname === route.href ? "bg-black" : "")}
                             variant="outline"
                           >
                             {route.icon}
@@ -127,39 +115,26 @@ const Sidebar: React.FC<SidebarProps> = ({ username, imageUrl, fullName }) => {
             <div className="flex w-full justify-between space-x-4 items-center select-none">
               <Avatar>
                 <AvatarImage
-                  src={imageUrl}
-                  alt={`${username}'s profile image`}
+                  src={user.imageUrl}
+                  alt={`${user.username}'s profile image`}
                 />
                 <AvatarFallback>
                   <Skeleton className="w-[100px] h-[20px] rounded-full" />
                 </AvatarFallback>
               </Avatar>
-
-              <div className="flex space-x-2">
-                <Link href="/profile/edit">
-                  <Button variant="outline">
-                    <Edit size={15} />{" "}
-                    <span className="ml-2">Edit Profile</span>
-                  </Button>
-                </Link>
-                <SignOutButton>
-                  <Button variant="outline" size="icon">
-                    <LogOut size={15} />
-                  </Button>
-                </SignOutButton>
-              </div>
+              <AccountDropdown />
             </div>
             <div className="leading-3 select-none">
-              <p className="text-md md:text-lg">{fullName}</p>
-              <p className="text-sm md:text-md text-zinc-400">@{username}</p>
+              <p className="text-md md:text-lg">{user.fullName}</p>
+              <p className="text-sm md:text-md text-zinc-400">@{user.username}</p>
             </div>
 
-            <div className="py-10">
+            <div className="py-10 space-y-2">
               {routes.map((route) => (
                 <div key={route.name} className="w-full">
                   <Link href={route.href}>
                     <Button
-                      className="w-full flex items-center"
+                      className={cn("w-full flex items-center", pathname === route.href ? "bg-accent" : "")}
                       variant="outline"
                     >
                       {route.icon}

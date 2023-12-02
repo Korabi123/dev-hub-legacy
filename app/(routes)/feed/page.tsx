@@ -1,16 +1,20 @@
+"use client";
+
 import { PostCard } from "@/components/post-card";
 import Sidebar from "@/components/sidebar";
 
-import { auth, clerkClient } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 
-const FeedPage = async () => {
-  const { userId } = auth();
+const FeedPage = () => {
+  const { user } = useUser();
 
-  const user = await clerkClient.users.getUser(userId as string);
-
+  if (!user) {
+    return null
+  }
+  
   return (
     <div className="h-full">
-      <Sidebar username={user.username as string} imageUrl={user.imageUrl} fullName={user.firstName! + " " + user.lastName} />
+      <Sidebar />
       
       <div className="sm:ml-72 pt-20 flex justify-center items-center">  
         <div className="grid place-items-center gap-x-10 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4 mb-4">

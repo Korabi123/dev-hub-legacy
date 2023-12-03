@@ -63,7 +63,7 @@ const Sidebar = () => {
             </SheetTrigger>
 
             <SheetContent side="left">
-              <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+              <div className="h-full px-3 py-4 overflow-y-auto">
                 <p className="select-none scroll-m-20 text-3xl font-extrabold tracking-tighter transition-colors first:mt-0">
                   DevHub
                 </p>

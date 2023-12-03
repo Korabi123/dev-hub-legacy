@@ -1,10 +1,8 @@
 import { PostCard } from "@/components/post-card";
 import Sidebar from "@/components/sidebar";
-import { Button } from "@/components/ui/button";
 import prismadb from "@/lib/prismadb";
 
 import { clerkClient } from "@clerk/nextjs";
-import Link from "next/link";
 
 const FeedPage = async () => {
   const latestPosts = await prismadb.post.findMany({

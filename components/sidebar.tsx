@@ -107,7 +107,7 @@ const Sidebar = () => {
                     ))}
                   </div>
                   <div className="w-full">
-                    <Link href={"/settings"}>
+                    {/* <Link href={"/settings"}>
                       <Button
                         variant={"outline"}
                         className={cn(
@@ -118,7 +118,7 @@ const Sidebar = () => {
                         <Settings size={15} />
                         <p className="ml-2">Settings</p>
                       </Button>
-                    </Link>
+                    </Link> */}
                   </div>
                 </ul>
               </div>

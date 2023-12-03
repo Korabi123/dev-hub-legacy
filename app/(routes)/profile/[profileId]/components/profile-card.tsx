@@ -1,5 +1,3 @@
-import { clerkClient,} from "@clerk/nextjs";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
@@ -12,16 +10,17 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import prismadb from "@/lib/prismadb";
 import { PostCard } from "@/components/post-card";
+import { User } from "@clerk/nextjs/server";
 
 interface ProfileCardProps {
-  profileId: string
+  profileId: string;
+  user: User;
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = async ({
-  profileId
+  profileId,
+  user,
 }) => {
-  const user = await clerkClient.users.getUser(profileId)
-
   const latestPostsByUser = await prismadb.post.findMany({
     where: {
       userId: profileId,
@@ -39,8 +38,8 @@ const ProfileCard: React.FC<ProfileCardProps> = async ({
             <div className="flex w-full justify-between">
               <Avatar className="lg:h-40 lg:w-40 h-20 w-20">
                 <AvatarImage
-                  src={user.imageUrl}
-                  alt={`${user.username}'s profile image`}
+                  src={user?.imageUrl}
+                  alt={`${user?.username}'s profile image`}
                 />
                 <AvatarFallback>
                   <Skeleton className="lg:h-40 lg:w-40 w-20 h-20 rounded-full" />
@@ -48,10 +47,10 @@ const ProfileCard: React.FC<ProfileCardProps> = async ({
               </Avatar>
               <div>
                 <p className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl" suppressHydrationWarning>
-                  {user.firstName + ' ' + user.lastName}
+                  {user?.firstName + ' ' + user?.lastName}
                 </p>
                 <p className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-zinc-400" suppressHydrationWarning>
-                  @{user.username}
+                  @{user?.username}
                 </p>
               </div>
             </div>
@@ -71,7 +70,7 @@ const ProfileCard: React.FC<ProfileCardProps> = async ({
             <Separator className="mt-2 mb-6" />
             <div className="grid lg:grid-cols-2 md:grid-cols-1 place-items-center">
               {latestPostsByUser.map((post) => (
-                <PostCard key={post.id} data={post} username={user.username as string} />
+                <PostCard className="mb-4" key={post.id} data={post} username={user?.username as string} />
               ))}
             </div>
           </div>

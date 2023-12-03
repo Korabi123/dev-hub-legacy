@@ -80,7 +80,7 @@ const ProfileCard = async () => {
           </div>
           <div className="grid lg:grid-cols-2 md:grid-cols-1 place-items-center">
             {latestPostsByUser.map((post) => (
-              <PostCard key={post.id} data={post} username={user.username as string} />
+              <PostCard className="mb-4" key={post.id} data={post} username={user.username as string} />
             ))} 
           </div>
         </CardContent>

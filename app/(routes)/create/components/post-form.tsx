@@ -31,8 +31,8 @@ const formSchema = z.object({
   }),
   content: z.string().min(10, {
     message: "Content Must Be At least 10 Characters."
-  }).max(500, {
-    message: "Content Cannot Be Longer than 500 Characters."
+  }).max(4000, {
+    message: "Content Cannot Be Longer than 4000 Characters."
   })
 });
 

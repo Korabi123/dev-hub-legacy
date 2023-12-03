@@ -52,7 +52,7 @@ export const PostCard: React.FC<PostCardProps> = ({
 
   useEffect(() => {
     setIsMounted(true);
-  })
+  }, [])
 
   if (!isMounted) return null
 

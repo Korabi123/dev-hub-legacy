@@ -23,7 +23,7 @@ const ProfilePage = async ({ params }: { params: { profileId: string } }) => {
               404
             </h1>
             <p className="font-semibold text-lg [&:not(:first-child)]:mt-6">
-              We couldn't find the user you're looking for.
+              We couldn&apos;t find the user you&apos;re looking for.
             </p>
           </div>
           <Image

@@ -12,7 +12,7 @@ export default function ProfileLayout({
 
   useEffect(() => {
     setMounted(true);
-  })
+  }, [])
 
   if (!isMounted) return null; // Don't render anything until the component is mounted. This prevents any flashing or blank screen.
 

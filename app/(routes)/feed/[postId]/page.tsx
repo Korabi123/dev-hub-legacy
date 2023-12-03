@@ -28,7 +28,7 @@ const PostPage = async ({ params }: { params: { postId: string } }) => {
               404
             </h1>
             <p className="font-semibold text-lg [&:not(:first-child)]:mt-6">
-              We couldn't find the page you're looking for.
+              We couldn&apos;t find the page you&apos;re looking for.
             </p>
           </div>
           <Image

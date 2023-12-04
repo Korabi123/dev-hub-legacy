@@ -37,6 +37,7 @@ interface PostCardProps {
     content: string;
     id: string;
     userId: string;
+    imageUrl: string;
   };
   authorImage: string;
   username: string;
@@ -52,7 +53,6 @@ export const PostCard: React.FC<PostCardProps> = ({
 }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -74,21 +74,30 @@ export const PostCard: React.FC<PostCardProps> = ({
             <CardDescription>
               <div className="mt-4 flex items-center gap-x-2">
                 <Avatar>
-                  <AvatarImage 
-                    src={authorImage}
-                  />
+                  <AvatarImage src={authorImage} />
                 </Avatar>
                 @{username}
                 <Link href={`/profile/${data.userId}`} className="ml-4">
-                  <p className="hover:underline text-zinc-400 transition">View Profile</p>
+                  <p className="hover:underline text-zinc-400 transition">
+                    View Profile
+                  </p>
                 </Link>
               </div>
             </CardDescription>
           </div>
         </CardHeader>
         <CardContent>
-          <p className="leading-7 [&:not(:first-child)]:mt-6 text-lg">{data.content}</p>
-          <div style={{ backgroundImage: "url(https://images.unsplash.com/photo-1682687219573-3fd75f982217?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHx8)", backgroundPosition: 'center' }} className="mt-4 relative aspect-video rounded-lg overflow-hidden bg-cover" />
+          <p className="leading-7 [&:not(:first-child)]:mt-6 text-lg">
+            {data.content}
+          </p>
+          <div className="mt-4 relative aspect-video rounded-lg overflow-hidden bg-cover">
+            <Image
+              src={data.imageUrl}
+              fill
+              alt="Post Image"
+              className="rounded-lg"
+            />
+          </div>
         </CardContent>
 
         <CardFooter className="w-full">

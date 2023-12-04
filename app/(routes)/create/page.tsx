@@ -4,7 +4,9 @@ import PostForm from "./components/post-form";
 
 const CreatePostPage = () => {
   return (
-    <PostForm />
+    <div className="h-full">
+      <PostForm />
+    </div>
   );
 };
 

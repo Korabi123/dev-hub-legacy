@@ -35,6 +35,7 @@ interface PostCardProps {
     title: string;
     content: string;
     id: string;
+    imageUrl: string;
   }
   username: string;
   onClick?: () => void;
@@ -65,7 +66,7 @@ export const PostCard: React.FC<PostCardProps> = ({
         <CardContent>
           <div className="aspect-video relative">
           <Image 
-            src="https://images.unsplash.com/photo-1682686578289-cf9c8c472c9b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8"
+            src={data.imageUrl}
             fill
             alt="Post Image"
             className="rounded-lg"

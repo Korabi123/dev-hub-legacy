@@ -17,4 +17,5 @@ model Post {
   content String
   userId  String
   createdAt DateTime  @default(now())
+  imageUrl  String
 }

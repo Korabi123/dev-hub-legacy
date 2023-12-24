@@ -111,7 +111,7 @@ export function AccountDropdown() {
         <DropdownMenuItem className="cursor-pointer">
           <button
             className="py-0 px-0 flex items-center w-full"
-            onClick={() => signOut(() => router.push("/sign-in"))}
+            onClick={() => signOut(() => router.push("/"))}
           >
             <LogOut className="mr-2 h-4 w-4" />
             <span>Log out</span>

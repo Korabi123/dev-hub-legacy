@@ -1,20 +1,23 @@
 import Link from "next/link";
 
-const Navbar = () => {
+import { NavButton } from "./navbar-button";
+
+const Navbar = async () => {
   return (
-    <nav className="py-2 border-b w-full">
-      <div className="flex w-full justify-center">
-        <div className="text-xl font-bold select-none tracking-tighter">
-          <Link href="/">
-            <span>DevHub</span>
-          </Link>{" "}
-          /{" "}
-          <Link href="/feed">
-            <span className="text-zinc-400 font-normal hover:text-black dark:hover:text-white transition-all">Feed</span>
-          </Link>
+    <>
+      <header className="fixed inset-x-0 top-0 z-30 w-full bg-white">
+        <div className="py-4 flex xl:px-96 lg:px-60 md:px-36 px-4 justify-between">
+          <div>
+            <Link href="/">
+              <h1 className="tracking-tighter font-bold text-3xl">DevHub</h1>
+            </Link>
+          </div>
+          <div>
+            <NavButton />
+          </div>
         </div>
-      </div>
-    </nav>
+      </header>
+    </>
   );
 };
 

@@ -31,8 +31,8 @@ const ProfileCard: React.FC<ProfileCardProps> = async ({
   })
 
   return (
-    <div className="flex sm:ml-72 py-20 items-center justify-center">
-      <Card className="lg:w-[800px] md:w-[500px] select-none">
+    <div className="flex sm:ml-72 py-20 sm:items-center sm:justify-center">
+      <Card className="lg:w-[800px] md:w-[500px] w-full select-none">
         <CardHeader>
           <CardTitle className="font-bold tracking-tight">
             <div className="flex w-full justify-between">
@@ -46,10 +46,15 @@ const ProfileCard: React.FC<ProfileCardProps> = async ({
                 </AvatarFallback>
               </Avatar>
               <div>
-                <p className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl" suppressHydrationWarning>
-                  {user?.firstName + ' ' + user?.lastName}
-                </p>
-                <p className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-zinc-400" suppressHydrationWarning>
+                {user?.firstName && (
+                  <p className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+                    {user?.firstName + ' ' + user?.lastName}
+                  </p>
+                )}
+                {!user?.firstName && (
+                  null
+                )}
+                <p className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-zinc-400">
                   @{user?.username}
                 </p>
               </div>
@@ -68,7 +73,7 @@ const ProfileCard: React.FC<ProfileCardProps> = async ({
               Posts
             </p>
             <Separator className="mt-2 mb-6" />
-            <div className="grid lg:grid-cols-2 md:grid-cols-1 place-items-center">
+            <div className="grid lg:grid-cols-2 md:grid-cols-1 justify-center">
               {latestPostsByUser.map((post) => (
                 <PostCard className="mb-4" key={post.id} data={post} username={user?.username as string} />
               ))}

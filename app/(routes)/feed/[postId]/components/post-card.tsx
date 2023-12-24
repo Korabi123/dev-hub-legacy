@@ -64,7 +64,7 @@ export const PostCard: React.FC<PostCardProps> = ({
     <div className="flex py-20 items-center justify-center">
       <Card
         onClick={onClick}
-        className={cn("lg:w-[650px] md:w-[500px] select-none", className)}
+        className={cn("lg:w-[650px] sm:w-[500px] w-full select-none", className)}
       >
         <CardHeader>
           <CardTitle className="font-bold tracking-tight">

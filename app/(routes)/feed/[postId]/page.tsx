@@ -15,7 +15,7 @@ const PostPage = async ({ params }: { params: { postId: string } }) => {
     const user = await clerkClient.users.getUser(userById as string);
 
     return (
-      <div className="sm:ml-72 h-full">
+      <div className="sm:ml-72">
         <PostCard data={postById} authorImage={user.imageUrl} username={user.username as string} />
       </div>
     );

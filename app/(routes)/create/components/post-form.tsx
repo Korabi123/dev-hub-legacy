@@ -1,4 +1,3 @@
-import { useUser } from "@clerk/nextjs";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -46,7 +45,6 @@ const formSchema = z.object({
 export const revalidate = 0;
 
 const PostForm = () => {
-  const user = useUser();
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -70,7 +68,7 @@ const PostForm = () => {
 
   return (
     <div className="flex sm:ml-72 py-20 items-center justify-center">
-      <Card className="lg:w-[800px] md:w-[500px] select-none">
+      <Card className="lg:w-[800px] md:w-[500px] w-full select-none">
         <CardHeader>
           <CardTitle className="font-bold tracking-tight">
             Create Post

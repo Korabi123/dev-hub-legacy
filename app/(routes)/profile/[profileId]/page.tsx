@@ -9,7 +9,7 @@ const ProfilePage = async ({ params }: { params: { profileId: string } }) => {
 
     if (user) {
       return (
-        <div className="h-full">
+        <div>
           <ProfileCard profileId={params.profileId} user={user} />
         </div>
       );

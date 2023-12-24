@@ -18,22 +18,21 @@ import prismadb from "@/lib/prismadb";
 import { PostCard } from "./post-card";
 
 const ProfileCard = async () => {
-
   const { userId } = auth();
-  const user = await clerkClient.users.getUser(userId as string)
+  const user = await clerkClient.users.getUser(userId as string);
 
   const latestPostsByUser = await prismadb.post.findMany({
     where: {
       userId: user.id,
     },
     orderBy: {
-      createdAt: 'desc',
-    }
-  })
+      createdAt: "desc",
+    },
+  });
 
   return (
-    <div className="flex sm:ml-72 py-20 items-center justify-center">
-      <Card className="lg:w-[800px] md:w-[500px] select-none">
+    <div className="flex py-20 items-center justify-center">
+      <Card className="lg:w-[800px] md:w-[500px] w-full select-none">
         <CardHeader>
           <CardTitle className="font-bold tracking-tight">
             <div className="flex w-full justify-between">
@@ -47,9 +46,12 @@ const ProfileCard = async () => {
                 </AvatarFallback>
               </Avatar>
               <div>
-                <p className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-                  {user.firstName + ' ' + user.lastName}
-                </p>
+                {user?.firstName && (
+                  <p className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+                    {user?.firstName + " " + user?.lastName}
+                  </p>
+                )}
+                {!user?.firstName && null}
                 <p className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-zinc-400">
                   @{user.username}
                 </p>
@@ -75,12 +77,19 @@ const ProfileCard = async () => {
           </p>
           <Separator className="mt-2 mb-6" />
           <div>
-            {latestPostsByUser.length === 0 && <p className="text-lg text-zinc-400">No posts.</p>}
+            {latestPostsByUser.length === 0 && (
+              <p className="text-lg text-zinc-400">No posts.</p>
+            )}
           </div>
-          <div className="grid lg:grid-cols-2 md:grid-cols-1 place-items-center">
+          <div className="grid lg:grid-cols-2 md:grid-cols-1 place-items-center justify-center">
             {latestPostsByUser.map((post) => (
-              <PostCard className="mb-4" key={post.id} data={post} username={user.username as string} />
-            ))} 
+              <PostCard
+                className="mb-4"
+                key={post.id}
+                data={post}
+                username={user.username as string}
+              />
+            ))}
           </div>
         </CardContent>
       </Card>

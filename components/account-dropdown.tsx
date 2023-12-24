@@ -90,7 +90,7 @@ export function AccountDropdown() {
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href="https://github.com/Korabi123/dev-hub-social-media"
+          href="https://github.com/Korabi123/dev-hub"
         >
           <DropdownMenuItem className="cursor-pointer">
             <Github className="mr-2 h-4 w-4" />
@@ -100,7 +100,7 @@ export function AccountDropdown() {
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href="https://github.com/Korabi123/dev-hub-social-media/issues"
+          href="https://github.com/Korabi123/dev-hub/issues"
         >
           <DropdownMenuItem className="cursor-pointer">
             <LifeBuoy className="mr-2 h-4 w-4" />

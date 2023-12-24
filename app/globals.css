@@ -29,6 +29,25 @@ body,
   background: #555;
 }
 
+.animate-gradient {
+  background-size: 300%;
+  -webkit-animation: animatedgradient 4s ease infinite alternate;
+  -moz-animation: animatedgradient 4s ease infinite alternate;
+  animation: animatedgradient 4s ease infinite alternate;
+}
+
+@keyframes animatedgradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 
 @layer base {
   :root {

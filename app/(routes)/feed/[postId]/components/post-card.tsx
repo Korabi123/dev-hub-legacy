@@ -24,11 +24,11 @@ import ShareButtons from "@/components/share-buttons";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Copy } from "lucide-react";
+import { Copy, Edit } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { useRouter } from "next/navigation";
 
 interface PostCardProps {
   className?: string;
@@ -42,6 +42,7 @@ interface PostCardProps {
   authorImage: string;
   username: string;
   onClick?: () => void;
+  logedInId: string;
 }
 
 export const PostCard: React.FC<PostCardProps> = ({
@@ -50,9 +51,12 @@ export const PostCard: React.FC<PostCardProps> = ({
   username,
   onClick,
   authorImage,
+  logedInId,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -83,6 +87,7 @@ export const PostCard: React.FC<PostCardProps> = ({
                   </p>
                 </Link>
               </div>
+              {logedInId === data.userId ? <Button variant='outline' className="mt-4 items-center" onClick={() => router.push(`/feed/${data.id}/edit`)}><Edit className="h-4 w-4" /> <span className="ml-2">Edit Post</span></Button> : null}
             </CardDescription>
           </div>
         </CardHeader>

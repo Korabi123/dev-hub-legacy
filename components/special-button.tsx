@@ -1,13 +1,24 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { auth } from "@clerk/nextjs";
+import { redirect, useRouter } from "next/navigation";
 
 export const ButtonFlickeringLight = () => {
   const router = useRouter();
+  const { userId } = auth()
 
   return (
     <>
-      <button onClick={() => router.push(process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL!)}>
+      <button onClick={() => {
+        if (!userId){
+          router.push(process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL!);
+        }else{
+          redirect('/feed')
+        }}
+
+
+        
+}>
         <div className="light" />
         Get Started
       </button>

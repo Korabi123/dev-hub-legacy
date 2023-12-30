@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import ImageUpload from "./image-upload";
+import { useState } from "react";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -45,6 +46,8 @@ const formSchema = z.object({
 export const revalidate = 0;
 
 const PostForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -57,8 +60,10 @@ const PostForm = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setIsLoading(true);
       await axios.post("/api/create", values);
 
+      setIsLoading(false);
       router.push("/profile");
       router.refresh();
     } catch (error) {
@@ -85,7 +90,7 @@ const PostForm = () => {
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="Forms In NextJS 14" {...field} />
+                      <Input disabled={isLoading} placeholder="Forms In NextJS 14" {...field} />
                     </FormControl>
                     <FormDescription>
                       This is the title that will be displayed in your post.
@@ -102,6 +107,7 @@ const PostForm = () => {
                     <FormLabel>Post Content</FormLabel>
                     <FormControl>
                       <Textarea
+                        disabled={isLoading}
                         placeholder="Forms are an integral part of web development, allowing users to interact with and submit data to a website. Next.js, a popular React framework, provides a seamless way to handle forms while leveraging its server-side rendering capabilities."
                         {...field}
                       />
@@ -121,6 +127,7 @@ const PostForm = () => {
                     <FormLabel>Post Image</FormLabel>
                     <FormControl>
                       <ImageUpload
+                        disabled={isLoading}
                         value={field.value ? [field.value] : []}
                         onChange={(url) => field.onChange(url)}
                         onRemove={() => field.onChange("")}
@@ -133,7 +140,7 @@ const PostForm = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Create</Button>
+              <Button disabled={isLoading} type="submit">Create</Button>
             </form>
           </Form>
         </CardContent>

@@ -64,9 +64,11 @@ const Sidebar = () => {
 
             <SheetContent side="left">
               <div className="h-full px-3 py-4 overflow-y-auto">
-                <p className="select-none scroll-m-20 text-3xl font-extrabold tracking-tighter transition-colors first:mt-0">
-                  DevHub
-                </p>
+                <Link href="/">
+                  <p className="select-none scroll-m-20 text-3xl font-extrabold tracking-tighter transition-colors first:mt-0">
+                    DevHub
+                  </p>
+                </Link>
                 <Separator className="mt-2 mb-6" />
                 <ul className="space-y-2 font-medium">
                   <div className="flex w-full justify-between space-x-4 items-center select-none">
@@ -131,9 +133,11 @@ const Sidebar = () => {
 
       <aside className="fixed top-0 left-0 z-10 w-72 h-screen transition-transform -translate-x-full sm:translate-x-0">
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-black/50">
-          <p className="select-none scroll-m-20 text-3xl font-extrabold tracking-tighter transition-colors first:mt-0">
-            DevHub
-          </p>
+          <Link href="/">
+            <p className="select-none scroll-m-20 text-3xl font-extrabold tracking-tighter transition-colors first:mt-0">
+              DevHub
+            </p>
+          </Link>
           <Separator className="mt-2 mb-6" />
           <ul className="space-y-2 font-medium">
             <div className="flex w-full justify-between space-x-4 items-center select-none">

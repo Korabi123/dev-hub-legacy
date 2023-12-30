@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<a name="readme-top"></a>
 
-## Getting Started
+<!-- PROJECT LOGO -->
+<!--suppress HtmlDeprecatedAttribute -->
+<div align="center">
+  <img src="./public/logo-black-1200x1200.png" alt="DevHub Logo">
+  <h1 align="center">DevHub</h1>
+  <p align="center">
+    The Ultimate Dev Connection
+    <br />
+    <br />
+  </p>
+</div>
 
-First, run the development server:
+## 🛠️ Powered by NextJS
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**[Project In Development]**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💡 Table Of Contents
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [🔥 Features](#features)
+- [🛠️ Technologies Used](#technologies-used)
+- [🪄 Getting Started](#localy-running-the-project)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## 🔥 Features
 
-To learn more about Next.js, take a look at the following resources:
+- Profile customization; Want to tell the world something about you? Add a bio. Want to become somebody new? Change username fullname and more.
+- Create & Edit posts; Create posts with cover images and edit them at any time. You can only edit a post that you posted.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Technologies Used
+- **Next.js 13:** A cutting-edge React framework that enables server-side rendering, routing, and more.
+- **Tailwind CSS:** A highly customizable CSS framework that speeds up UI development.
+- **Prisma:** A modern database toolkit that simplifies database access with type-safe queries.
+- **MongoDB:** A NoSQL database for scalable and flexible data storage.
+- **TypeScript:** A statically-typed superset of JavaScript that enhances code quality and maintainability.
+- **Clerk:** A modern authentication service that requires almost no setup.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🪄 Localy Running The Project
 
-## Deploy on Vercel
+### Prerequisites
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Before you begin, ensure you have the following installed:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Node.js: [Download](https://nodejs.org/)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Korabi123/dev-hub.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd dev-hub
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+### Configuration
+
+1. Configure the env file with the following values:
+   ```js
+     # This was inserted by `prisma init`:
+     # Environment variables declared in this file are automatically made available to Prisma.
+     # See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
+    
+     # Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
+     # See the documentation for all the connection string options: https://pris.ly/d/connection-strings
+    
+     DATABASE_URL=""
+    
+    
+     # Clerk Auth
+     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+     CLERK_SECRET_KEY=
+     NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+     NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+     NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/feed
+     NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/feed
+      
+     # Next Cloudinary
+     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=""
+   ```  
+
+## Usage
+
+1. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+2. Open your browser and navigate to `http://localhost:3000` to access the app.
+
+3. Register a new account or log in if you already have one.

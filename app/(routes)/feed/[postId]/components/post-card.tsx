@@ -10,25 +10,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import ShareButtons from "@/components/share-buttons";
-import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
 
 import { useEffect, useState } from "react";
-import { Copy, Edit } from "lucide-react";
+import { Edit } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
+import ShareDrawer from "@/components/share-drawer";
+import ShareDialog from "@/components/share-dialog";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 interface PostCardProps {
   className?: string;
@@ -54,7 +46,8 @@ export const PostCard: React.FC<PostCardProps> = ({
   logedInId,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const [isCopied, setIsCopied] = useState(false);
+
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const router = useRouter();
 
@@ -106,43 +99,7 @@ export const PostCard: React.FC<PostCardProps> = ({
         </CardContent>
 
         <CardFooter className="w-full">
-          <Dialog>
-            <DialogTrigger className="w-full">
-              <Button className="w-full">Share</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Share This Post</DialogTitle>
-                <DialogDescription>
-                  Anyone with the post link will be able to view this post.
-                </DialogDescription>
-              </DialogHeader>
-              <br />
-              <h2>Social media</h2>
-              <Separator />
-              <div className="flex gap-2">
-                <ShareButtons
-                  urlFacebook={`${window.location}/${data.id}`}
-                  urlReddit={`${window.location}/${data.id}`}
-                />
-              </div>
-              <br />
-              <h2>Link</h2>
-              <Input defaultValue={`${window.location}/${data.id}`} readOnly />
-              <Button
-                onClick={() => {
-                  navigator.clipboard.writeText(
-                    `${window.location}/${data.id}`
-                  );
-                  setIsCopied(true);
-                }}
-                size="sm"
-                className="px-3"
-              >
-                {!isCopied ? <Copy size={20} /> : "Copied!"}
-              </Button>
-            </DialogContent>
-          </Dialog>
+          {isDesktop ? <ShareDialog data={data} /> : <ShareDrawer data={data} />}
         </CardFooter>
       </Card>
     </div>

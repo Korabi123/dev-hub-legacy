@@ -2,12 +2,26 @@
 
 import { useRouter } from "next/navigation";
 
-export const ButtonFlickeringLight = () => {
+interface Props {
+  userId?: string;
+}
+
+export const ButtonFlickeringLight: React.FC<Props> = ({
+  userId
+}) => {
   const router = useRouter();
+
+  const handleClick = () => {
+    if (!userId) {
+      router.push(process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL!)
+    } else {
+      router.push("/feed");
+    }
+  }
 
   return (
     <>
-      <button onClick={() => router.push(process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL!)}>
+      <button onClick={handleClick}>
         <div className="light" />
         Get Started
       </button>

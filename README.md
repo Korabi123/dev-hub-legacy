@@ -3,7 +3,7 @@
 <!-- PROJECT LOGO -->
 <!--suppress HtmlDeprecatedAttribute -->
 <div align="center">
-  <img src="./public/logo-black-1200x1200.png" alt="DevHub Logo">
+  <img src="./public/logo-black-256x256.png" alt="DevHub Logo">
   <h1 align="center">DevHub</h1>
   <p align="center">
     The Ultimate Dev Connection

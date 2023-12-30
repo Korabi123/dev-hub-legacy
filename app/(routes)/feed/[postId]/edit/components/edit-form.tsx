@@ -27,6 +27,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import ImageUpload from "@/app/(routes)/create/components/image-upload";
 import { Post } from "@prisma/client";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface Props {
   data: Post;
@@ -56,6 +58,8 @@ const EditPostForm: React.FC<Props> = ({
   data,
   paramsId,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -68,9 +72,11 @@ const EditPostForm: React.FC<Props> = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setIsLoading(true);
       await axios.patch(`/api/edit/${paramsId}`, values);
 
       router.push(`/feed/${paramsId}`);
+      setIsLoading(false);
       router.refresh();
     } catch (error) {
       console.log(error);
@@ -96,7 +102,7 @@ const EditPostForm: React.FC<Props> = ({
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="Forms In NextJS 14" {...field} />
+                      <Input disabled={isLoading} placeholder="Forms In NextJS 14" {...field} />
                     </FormControl>
                     <FormDescription>
                       This is the title that will be displayed in your post.
@@ -113,6 +119,7 @@ const EditPostForm: React.FC<Props> = ({
                     <FormLabel>Post Content</FormLabel>
                     <FormControl>
                       <Textarea
+                        disabled={isLoading}
                         placeholder="Forms are an integral part of web development, allowing users to interact with and submit data to a website. Next.js, a popular React framework, provides a seamless way to handle forms while leveraging its server-side rendering capabilities."
                         {...field}
                       />
@@ -132,6 +139,7 @@ const EditPostForm: React.FC<Props> = ({
                     <FormLabel>Post Image</FormLabel>
                     <FormControl>
                       <ImageUpload
+                        disabled={isLoading}
                         value={field.value ? [field.value] : []}
                         onChange={(url) => field.onChange(url)}
                         onRemove={() => field.onChange("")}
@@ -144,7 +152,7 @@ const EditPostForm: React.FC<Props> = ({
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">Update</Button>
+              <Button disabled={isLoading} className={cn("w-full", isLoading ? "bg-opacity-80 cursor-not-allowed" : "")} type="submit">Update</Button>
             </form>
           </Form>
         </CardContent>

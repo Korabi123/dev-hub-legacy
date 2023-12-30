@@ -25,6 +25,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import ImageUpload from "./image-upload";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -63,8 +64,8 @@ const PostForm = () => {
       setIsLoading(true);
       await axios.post("/api/create", values);
 
-      setIsLoading(false);
       router.push("/profile");
+      setIsLoading(false);
       router.refresh();
     } catch (error) {
       console.log(error);
@@ -140,7 +141,7 @@ const PostForm = () => {
                   </FormItem>
                 )}
               />
-              <Button disabled={isLoading} type="submit">Create</Button>
+              <Button disabled={isLoading} className={cn("w-full", isLoading ? "bg-opacity-80 cursor-not-allowed" : "")} type="submit">Create</Button>
             </form>
           </Form>
         </CardContent>

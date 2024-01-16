@@ -1,11 +1,14 @@
-<a name="readme-top"></a>
+<a name="readme-top">
+</a>
+
+# For the best experience go to the current (active) repo of DevHub
 
 <!-- PROJECT LOGO -->
 <!--suppress HtmlDeprecatedAttribute -->
-<div align="center">
+<div>
   <img src="./public/logo-black-256x256.png" alt="DevHub Logo">
-  <h1 align="center">DevHub</h1>
-  <p align="center">
+  <h1>DevHub</h1>
+  <p>
     The Ultimate Dev Connection
     <br />
     <br />
